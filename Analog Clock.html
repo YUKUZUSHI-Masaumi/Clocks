@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>アナログ時計</title>
+    <style>
+        body {
+            background: #dfcf9f;
+        }
+        .clock {
+            position: relative;
+            width: 100vmin;
+            height: 100vmin;
+            background: linear-gradient(#bfbfbf, #dfdfdf 25%, #7f7f7f 100%);
+            border-radius: 50%;
+            margin: auto;
+            left: 0;
+            top: 0;
+            box-shadow: 5px 5px 50px 0 #000;
+            user-select: none;
+        }
+        .inner-clock {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 80%;
+            height: 80%;
+            background-color: #fefefe;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .hand {
+            position: absolute;
+            left: 50%;
+            transform-origin: 50% 100%;
+            border: solid 0;
+        }
+        .hour-hand {
+            top: 25%;
+            width: 4%;
+            height: 25%;
+        }
+        .minute-hand {
+            top: 17.5%;
+            width: 3%;
+            height: 32.5%;
+        }
+        .second-hand {
+            top: 10%;
+            width: 2%;
+            height: 40%;
+        }
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 6%;
+            height: 6%;
+            background: linear-gradient(#bfbfbf, #dfdfdf 25%, #7f7f7f 100%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 3px 3px 15px 0 #000;
+        }
+        .number {
+            position: absolute;
+            font-family: serif;
+            font-size: 10vmin;
+            color: #333;
+            text-align: center;
+            transform: translate(-50%, -50%);
+        }
+        .number1 { top: 15%; left: 70%; }
+        .number2 { top: 30%; left: 85%; }
+        .number3 { top: 50%; left: 90%; }
+        .number4 { top: 70%; left: 85%; }
+        .number5 { top: 85%; left: 70%; }
+        .number6 { top: 90%; left: 50%; }
+        .number7 { top: 85%; left: 30%; }
+        .number8 { top: 70%; left: 15%; }
+        .number9 { top: 50%; left: 10%; }
+        .number10 { top: 30%; left: 15%; }
+        .number11 { top: 15%; left: 30%; }
+        .number12 { top: 10%; left: 50%; }
+    </style>
+</head>
+<body>
+    <div class="clock">
+        <div class="inner-clock">
+            <div class="number number12">12</div>
+            <div class="number number1">1</div>
+            <div class="number number2">2</div>
+            <div class="number number3">3</div>
+            <div class="number number4">4</div>
+            <div class="number number5">5</div>
+            <div class="number number6">6</div>
+            <div class="number number7">7</div>
+            <div class="number number8">8</div>
+            <div class="number number9">9</div>
+            <div class="number number10">10</div>
+            <div class="number number11">11</div>
+            <div class="hand hour-hand" id="hour-hand"></div>
+            <div class="hand minute-hand" id="minute-hand"></div>
+            <div class="hand second-hand" id="second-hand"></div>
+            <div class="center"></div>
+        </div>
+    </div>
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            const milliseconds = now.getMilliseconds();
+
+            const hourHand = document.getElementById('hour-hand');
+            const minuteHand = document.getElementById('minute-hand');
+            const secondHand = document.getElementById('second-hand');
+
+            const hourAngle = (hours * 30) + (minutes * 0.5) + (seconds * (1 / 120));
+            const minuteAngle = (minutes * 6) + (seconds * 0.1);
+            const secondAngle = (seconds * 6) + (milliseconds * 0.006);
+
+            hourHand.style.transform = `translate(-50%, 0%) rotate(${hourAngle}deg)`;
+            minuteHand.style.transform = `translate(-50%, 0%) rotate(${minuteAngle}deg)`;
+            secondHand.style.transform = `translate(-50%, 0%) rotate(${secondAngle}deg)`;
+
+            hourHand.style.background = `linear-gradient(${180 + hourAngle}deg, #bfbfbf, #dfdfdf 25%, #7f7f7f 100%)`;
+            minuteHand.style.background = `linear-gradient(${180 + minuteAngle}deg, #bfbfbf, #dfdfdf 25%, #7f7f7f 100%)`;
+            secondHand.style.background = `linear-gradient(${180 + secondAngle}deg, #bfbfbf, #dfdfdf 25%, #7f7f7f 100%)`;
+
+            setTimeout(updateClock, 1000);
+        }
+
+        window.onload = updateClock;
+    </script>
+</body>
+</html>
